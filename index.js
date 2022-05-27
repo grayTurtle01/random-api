@@ -1,6 +1,9 @@
 express = require('express')
+cors = require('cors')
 
 app = express()
+
+app.use( cors() )
 
 app.get("/", (req, res) => {
     res.end("Hello Express");
