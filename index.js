@@ -1,11 +1,14 @@
 express = require('express')
 cors = require('cors')
 
+require('./db.js')
+
 app = express()
 
 app.use( cors() )
 
 app.get("/", (req, res) => {
+
     res.end("Hello Express");
 })
 
