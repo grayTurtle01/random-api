@@ -12,6 +12,8 @@ MongoClient.connect(uri)
         db = client.db('miDB')
     })
     .then( () => {
+        /*** Counter Initial State ****/
+        
         // let obj = { 
         //             name: 'coin', 
         //             heads : 0, 
