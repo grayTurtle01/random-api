@@ -1,6 +1,9 @@
+dotenv = require('dotenv')
+dotenv.config()
+
 const {MongoClient} = require('mongodb')
 
-uri = "mongodb://localhost/miDB"
+uri = process.env.MONGO_URI
 
 db = {}
 MongoClient.connect(uri)
