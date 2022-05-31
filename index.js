@@ -1,7 +1,7 @@
 express = require('express')
 cors = require('cors')
 
-require('./db')
+require('./mongo-db')
 
 app = express()
 
@@ -16,6 +16,11 @@ app.get("/api/coin", async(req,res) => {
     random = Math.random()
     flag = random >= 0.5  ? 1 : 0
 
+    obj = {
+        'random': random,
+        'flag': flag
+    }
+
     //Update Counter
     head = 0
     tail = 0
@@ -27,39 +32,21 @@ app.get("/api/coin", async(req,res) => {
         tail = 1
     }
 
-    q = `UPDATE coin
-     SET heads= heads + ?,
-         tails= tails + ?
-     WHERE id=1
-     `
-    await db.run(q, [head, tail], (err) => {
-        if(err)
-            console.log(err)
-        else
-            console.log(" ==> row updated")
-    })
+    query = {name: 'coin'}
+    new_values = {$inc: { 'heads': head, 'tails': tail } }
+    options = {'upsert': true}
 
+    db.collection('counters').findOneAndUpdate(query, new_values, options)
+    .then( x => {
+        counter = x.value
+        obj.heads = counter.heads    
+        obj.tails = counter.tails    
 
-    // Send Result
-    q = 'SELECT * FROM coin WHERE id = 1'
-    db.all(q, (err, rows)=> {
-        if(err){
-            console.log("error")
-            res.json({status: 'error'})
-        }
-        else{
-            obj = { 'random': random,
-                    'flag': flag,
-                    'counter': rows[0] }
-            
-            
-            res.json( obj )
-        }
+        res.json( obj )
     })
+            
     
 })
-
-
 
 app.get("/api/dice", (req,res) => {
     face = Math.ceil( Math.random() *6 )
@@ -70,4 +57,4 @@ app.get("/api/dice", (req,res) => {
 
 
 PORT = process.env.PORT || 8000
-app.listen(PORT, ()=>console.log(`Server Listen on port: ${PORT}`))
+app.listen(PORT, ()=>console.log(` ==> Server Listen on port: ${PORT}`))
