@@ -1,7 +1,7 @@
 express = require('express')
 cors = require('cors')
 
-require('./db.js')
+require('./db')
 
 app = express()
 
@@ -57,10 +57,9 @@ app.get("/api/coin", async(req,res) => {
         }
     })
     
-
-            
-    
 })
+
+
 
 app.get("/api/dice", (req,res) => {
     face = Math.ceil( Math.random() *6 )

@@ -7,7 +7,7 @@ db = new sqlite.Database('miDB', (err) => {
         console.log(" ==> Connected to sqlite")
 })
 
-//~ // Create Coin Table
+/*** Create Coin Table ***/
 //~ query = `CREATE TABLE coin(id INTEGER PRIMARY KEY AUTOINCREMENT,
                            //~ heads int,
                            //~ tails int)`
@@ -21,7 +21,7 @@ db = new sqlite.Database('miDB', (err) => {
         //~ console.log(" ==> Table created")
 //~ })
 
-// Insert Initial State
+/*** Insert Initial State ***/
 //~ q = `INSERT INTO coin(heads, tails)
                  //~ VALUES(0,0)`
 
