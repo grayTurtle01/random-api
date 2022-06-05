@@ -1,5 +1,5 @@
 ## Description 📖
-Random API
+Get Random values from a API endpoints
 
 ## API
 
